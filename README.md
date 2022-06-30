@@ -18,6 +18,8 @@ sudo su; passwd; exit
 
 sudo apt-get install busybox cryptsetup dropbear
 sudo mkinitramfs -v -o /boot/initramfs.gz # creates keys and directories for dropbear
+lsinitramfs /boot/initramfs.gz |grep -P "sbin/(cryptsetup|dropbear)"
+
 sudo vim /etc/initramfs-tools/initramfs.conf # add DROPBEAR=y and CRYPTSETUP=y, does not enforce including cryptsetup!?
 sudo vim /usr/share/initramfs-tools/hooks/cryptroot # enforce setup="yes" so that cryptsetup is included in initramfs
 sudo vim /etc/dropbear/authorized_keys # add your ssh-pubkeys
