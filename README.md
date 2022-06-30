@@ -22,10 +22,12 @@ lsinitramfs /boot/initramfs.gz |grep -P "sbin/(cryptsetup|dropbear)"
 
 sudo vim /etc/initramfs-tools/initramfs.conf # add DROPBEAR=y and CRYPTSETUP=y, does not enforce including cryptsetup!?
 sudo vim /usr/share/initramfs-tools/hooks/cryptroot # enforce setup="yes" so that cryptsetup is included in initramfs
-sudo vim /etc/dropbear/authorized_keys # add your ssh-pubkeys
+
+#if /etc/dropbear-initramfs doesnt exist, somethigs wrong I think
+sudo vim /etc/dropbear-initramfs/authorized_keys # add your ssh-pubkeys
 
 sudo -E CRYPTSETUP=y mkinitramfs -v -o /boot/initramfs.gz # again so that the settings are applied, check output for dropbear and cryptsetup
-sudo vi /boot/config.txt # add: initramfs initramfs.gz followkernel
+sudo vim /boot/config.txt # add: initramfs initramfs.gz followkernel
 sudo reboot # test reboot
 sudo shutdown -h now
 
